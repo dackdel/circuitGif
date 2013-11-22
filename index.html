@@ -1,0 +1,54 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="description" content="Re-draw circuit diagrams to explain it better.">
+	<meta name="Ankkit Modi" content="Circuit Diagram">
+	<title>Circuit Draw</title>
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+	<script type="text/javascript" src="js/processing.js"></script>
+	<script type="text/javascript" src="js/gif.js"></script>
+	<script type="text/javascript" src="js/FileSaver.js"></script>
+		<script type="text/javascript" src="js/canvas-toBlob.js"></script>
+
+	<link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+	<canvas id='draw' data-processing-sources="reDraw.pde"></canvas>
+	<button id='export'>Export</button>
+	<script type="text/javascript">
+		$(function() {
+
+			var canvas = document.getElementById('draw');
+			var context = canvas.getContext('2d');
+			
+			$('#export').on('click', function(){
+				var processing = Processing.getInstanceById('draw');
+				var frames = processing.getFrames();
+				var encoder = new GIF({
+					workers: 4,
+					quality: 10,
+					width: 900,
+					height: 900
+				});
+				processing.stop();
+				console.log('Encoder started');
+
+				for (var i = 0; i < frames; i++) {
+					console.log('Adding frame', i, 'to encoder');
+					processing.setFrame(i);
+					processing.draw();
+					encoder.addFrame(context, { copy: true, delay: 20 });
+				}
+
+				console.log('Encoder finished');
+				encoder.on('finished', function(blob) {
+					saveAs(blob, 'circuit.gif');
+				});
+				encoder.render();
+				
+			});
+		});
+	</script>
+</body>
+</html>
