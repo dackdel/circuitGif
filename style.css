@@ -23,3 +23,50 @@ canvas {
   padding: 0px;
   
 }
+
+body {
+	width: 100%;
+	height: 100%;
+	
+}
+
+.row {
+	margin-bottom: 50px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	border-top: 1px solid transparent;
+	border-bottom: 1px solid transparent;
+	-webkit-transition: border 0.3s;
+
+}
+.row:hover {
+	border-color: black;
+	background: rgba(255,255,255, 0.3);
+	cursor: pointer;
+}
+
+.row div {
+	background-repeat: no-repeat;
+	background-size: contain;
+	height: 50px;
+}
+.clear {
+	margin: 0px;
+	padding: 0px;
+}
+
+
+#main {
+	width:  10%;
+	height: 100%;
+	position: absolute;
+
+}
+#draw {
+	width: 100%;
+	height: 100%;
+	position: fixed;
+	top: 0;
+	right: 0;
+}
+

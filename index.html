@@ -5,50 +5,96 @@
 	<meta name="description" content="Re-draw circuit diagrams to explain it better.">
 	<meta name="Ankkit Modi" content="Circuit Diagram">
 	<title>Circuit Draw</title>
-	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+	<script type="text/javascript" src="js/jquery-2.0.3.min.js"></script>	
 	<script type="text/javascript" src="js/processing.js"></script>
 	<script type="text/javascript" src="js/gif.js"></script>
 	<script type="text/javascript" src="js/FileSaver.js"></script>
-		<script type="text/javascript" src="js/canvas-toBlob.js"></script>
-
+	<script type="text/javascript" src="js/canvas-toBlob.js"></script>
+	<script type="text/javascript" src="js/jquery-ui-1.10.3.custom.min.js"></script>
 	<link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
 	<canvas id='draw' data-processing-sources="reDraw.pde"></canvas>
+	<div id='main'></div>
 	<button id='export'>Export</button>
+
 	<script type="text/javascript">
-		$(function() {
+		var canvas = document.getElementById('draw');
+		var context = canvas.getContext('2d');
+		var jsondata;
+		
+		dragging = false;
+		// activeObject = { posX: 13, posY: 30, theid:'symbol' };
 
-			var canvas = document.getElementById('draw');
-			var context = canvas.getContext('2d');
-			
-			$('#export').on('click', function(){
-				var processing = Processing.getInstanceById('draw');
-				var frames = processing.getFrames();
-				var encoder = new GIF({
-					workers: 4,
-					quality: 10,
-					width: 900,
-					height: 900
+		$(function(){
+			$.getJSON("all.json", function(d){
+				console.log(d);
+				$(d).each(function(i,item){
+					row = $("<div class='row' />");
+					var s = $("<div class='symbols' />");
+					s.css("background-image","url("+"images/" + item+")" );
+					s.appendTo(row);
+					s.attr('rel',item);
+					$("<div class='clear' />").appendTo(row);
+					$("#main").append(row);
+					
+					var offsetTop = s.offset().top;
+					s.attr('data-top',offsetTop);
+					$(".symbols").draggable();					
 				});
-				processing.stop();
-				console.log('Encoder started');
 
-				for (var i = 0; i < frames; i++) {
-					console.log('Adding frame', i, 'to encoder');
-					processing.setFrame(i);
-					processing.draw();
-					encoder.addFrame(context, { copy: true, delay: 20 });
-				}
+				$(".symbols").bind('dragstart', function(e){
+					dragging = true;
+						
+				}).bind('dragstop', function(){
+					
+					var processing = Processing.getInstanceById('draw');
+					dragging = false;
 
-				console.log('Encoder finished');
-				encoder.on('finished', function(blob) {
-					saveAs(blob, 'circuit.gif');
-				});
-				encoder.render();
-				
+					var calculatedTop = $(this).offset().top - document.body.scrollTop;
+					//processing.drawObject($(this).attr('rel'), $(this).offset().left, $(this).offset().top);
+					processing.drawObject($(this).attr('rel'), $(this).offset().left-10, calculatedTop);
+
+
+					
+					$(this).css({
+						left: '10px',
+						top: '10px'
+					})
+
+				})
 			});
+
 		});
-	</script>
+
+		$('#export').on('click', function(){
+			var processing = Processing.getInstanceById('draw');
+
+			var frames = processing.getFrames();
+			var encoder = new GIF({
+				workers: 4,
+				quality: 10,
+				width: $(window).width(),
+				height: $(window).height()
+			});
+			processing.stop();
+			console.log('Encoder started');
+
+			for (var i = 0; i < frames; i++) {
+				console.log('Adding frame', i, 'to encoder');
+				processing.setFrame(i);
+				processing.draw();
+				encoder.addFrame(context, { copy: true, delay: 20 });
+			}
+
+			console.log('Encoder finished');
+			encoder.on('finished', function(blob) {
+				saveAs(blob, 'circuit.gif');
+			});
+			encoder.render();
+			
+		});
+		
+	</script>	
 </body>
 </html>

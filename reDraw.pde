@@ -1,14 +1,20 @@
+
 boolean playing = true;
 int currFrame = 0;
 int frames = 50;
 int framesToSave = 0;
-PGraphics pg[] = new PGraphics[frames];
+PGraphics pg[] = new PGraphics[frames]; 
+int px = 0;
+int py = 0;
+
+
 
 void setup() {
-  size(900, 900);
+  size( $(window).width(), $(window).height());
   prepareGraphics();
 }
 void draw() {
+
   if (playing) {
     currFrame = frameCount % frames;
   } 
@@ -62,6 +68,18 @@ int getFrames() {
   return frames;
 }
 
+void drawObject(int id, int x, int y) {
+  console.log('draw object', id, x, y);
+
+  PShape s;
+  s = loadShape("images/" + id);
+  smooth();
+
+  for (int i=0; i<frames; i++) {
+    // pg[i].shape(s, x, y, 40, 40);
+    pg[i].shape(s, x, y);
+  }
+}
 
 void prepareGraphics() {
   for (int i=0; i<frames; i++) {

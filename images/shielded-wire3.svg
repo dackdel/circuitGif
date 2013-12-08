@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 16.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" id="Layer_1" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns"
+	 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="17px" height="18px"
+	 viewBox="0 0 17 18" enable-background="new 0 0 17 18" xml:space="preserve">
+<g id="Group" transform="translate(112.000000, 8.000000)" sketch:type="MSShapeGroup">
+</g>
+<g transform="translate(119.500000, 199.500000) scale(-1, -1) translate(-119.500000, -199.500000) translate(111.000000, 191.000000)" sketch:type="MSShapeGroup">
+	<path id="Shape_14_" fill="none" stroke="#000000" stroke-width="2" d="M111,199h16"/>
+	<path id="Shape_15_" fill="none" stroke="#000000" stroke-width="2" stroke-dasharray="2" d="M118,191h10"/>
+	<path id="Shape_16_" fill="none" stroke="#000000" stroke-width="2" stroke-dasharray="2" d="M118,207h10"/>
+	
+		<ellipse id="Oval_2_" transform="matrix(1 -2.622604e-06 2.622604e-06 1 -5.187988e-04 3.051758e-04)" fill="none" stroke="#000000" stroke-width="2" cx="119" cy="199" rx="4" ry="8"/>
+</g>
+</svg>
